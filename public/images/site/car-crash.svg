@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa" opacity="0.5"/>
+  
+  <!-- Road -->
+  <rect x="0" y="400" width="800" height="200" fill="#34495e"/>
+  <rect x="0" y="490" width="800" height="20" fill="#f1c40f" stroke="none" stroke-dasharray="20,20"/>
+  
+  <!-- Car 1 (crashed) -->
+  <g transform="translate(300, 380) rotate(15)">
+    <!-- Car body -->
+    <rect x="-60" y="-30" width="120" height="40" rx="10" fill="#e74c3c"/>
+    <!-- Windshield (cracked) -->
+    <path d="M-20,-30 L-10,-50 L10,-50 L20,-30" fill="#bdc3c7" stroke="#7f8c8d" stroke-width="2"/>
+    <path d="M0,-40 L-5,-45 M0,-40 L5,-35 M0,-40 L-8,-38" stroke="#7f8c8d" stroke-width="1"/>
+    <!-- Wheels -->
+    <circle cx="-40" cy="10" r="15" fill="#2c3e50"/>
+    <circle cx="40" cy="10" r="15" fill="#2c3e50"/>
+    <!-- Damage -->
+    <path d="M60,0 L70,-10 L80,5 L60,10 Z" fill="#c0392b"/>
+  </g>
+  
+  <!-- Car 2 (crashed) -->
+  <g transform="translate(450, 390) rotate(-20)">
+    <!-- Car body -->
+    <rect x="-60" y="-30" width="120" height="40" rx="10" fill="#3498db"/>
+    <!-- Windshield (cracked) -->
+    <path d="M-20,-30 L-10,-50 L10,-50 L20,-30" fill="#bdc3c7" stroke="#7f8c8d" stroke-width="2"/>
+    <path d="M0,-40 L-5,-45 M0,-40 L5,-35 M0,-40 L-8,-38" stroke="#7f8c8d" stroke-width="1"/>
+    <!-- Wheels -->
+    <circle cx="-40" cy="10" r="15" fill="#2c3e50"/>
+    <circle cx="40" cy="10" r="15" fill="#2c3e50"/>
+    <!-- Damage -->
+    <path d="M-60,0 L-70,-10 L-80,5 L-60,10 Z" fill="#2980b9"/>
+  </g>
+  
+  <!-- Smoke/Dust -->
+  <g opacity="0.7">
+    <circle cx="370" cy="350" r="20" fill="#bdc3c7"/>
+    <circle cx="390" cy="330" r="15" fill="#bdc3c7"/>
+    <circle cx="350" cy="340" r="25" fill="#bdc3c7"/>
+    <circle cx="410" cy="350" r="18" fill="#bdc3c7"/>
+  </g>
+  
+  <!-- Warning Signs -->
+  <g transform="translate(200, 320)">
+    <polygon points="0,-30 25,15 -25,15" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/>
+    <text x="0" y="10" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#e67e22">!</text>
+  </g>
+  
+  <g transform="translate(600, 320)">
+    <polygon points="0,-30 25,15 -25,15" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/>
+    <text x="0" y="10" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#e67e22">!</text>
+  </g>
+  
+  <!-- Skid Marks -->
+  <path d="M250,450 C300,440 350,460 380,390" stroke="#2c3e50" stroke-width="5" fill="none" opacity="0.5"/>
+  <path d="M550,450 C500,440 450,460 420,390" stroke="#2c3e50" stroke-width="5" fill="none" opacity="0.5"/>
+</svg>
