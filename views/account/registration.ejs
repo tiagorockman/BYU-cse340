@@ -1,0 +1,92 @@
+
+<div class="registration-container">
+  <h1><%= title %></h1>
+  
+  <div class="form-wrapper">
+    <form action="/account/register" method="post" class="registration-form">
+      
+      <div class="form-group">
+        <label for="account_firstname">First Name:</label>
+        <input 
+          type="text" 
+          id="account_firstname" 
+          name="account_firstname" 
+          required 
+          value="<%= locals.account_firstname || '' %>"
+          placeholder="Enter your first name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="account_lastname">Last Name:</label>
+        <input 
+          type="text" 
+          id="account_lastname" 
+          name="account_lastname" 
+          required 
+          value="<%= locals.account_lastname || '' %>"
+          placeholder="Enter your last name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="account_email">Email Address:</label>
+        <input 
+          type="email" 
+          id="account_email" 
+          name="account_email" 
+          required 
+          value="<%= locals.account_email || '' %>"
+          placeholder="Enter your email address"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="account_password">Password:</label>
+        <div class="password-input-wrapper">
+          <input 
+            type="password" 
+            id="account_password" 
+            name="account_password" 
+            required 
+            placeholder="Enter your password"
+          >
+          <button type="button" class="password-toggle" onclick="togglePassword()">
+            <span id="toggle-text">Show</span>
+          </button>
+        </div>
+        <div class="password-requirements">
+          <p>Password must meet the following requirements:</p>
+          <ul>
+            <li>Minimum 12 characters in length</li>
+            <li>Contain at least 1 capital letter</li>
+            <li>Contain at least 1 number</li>
+            <li>Contain at least 1 special character</li>
+          </ul>
+        </div>
+      </div>
+
+      <button type="submit" class="registration-btn">Register</button>
+      
+    </form>
+    
+    <div class="login-link">
+      <p>Already have an account? <a href="/account/login">Sign in here</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePassword() {
+  const passwordInput = document.getElementById('account_password');
+  const toggleText = document.getElementById('toggle-text');
+  
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleText.textContent = 'Hide';
+  } else {
+    passwordInput.type = 'password';
+    toggleText.textContent = 'Show';
+  }
+}
+</script>
