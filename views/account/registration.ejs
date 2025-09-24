@@ -1,4 +1,12 @@
 
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
 <div class="registration-container">
   <h1><%= title %></h1>
   
@@ -50,6 +58,7 @@
             name="account_password" 
             required 
             placeholder="Enter your password"
+            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
           >
           <button type="button" class="password-toggle" onclick="togglePassword()">
             <span id="toggle-text">Show</span>
@@ -58,10 +67,26 @@
         <div class="password-requirements">
           <p>Password must meet the following requirements:</p>
           <ul>
-            <li>Minimum 12 characters in length</li>
-            <li>Contain at least 1 capital letter</li>
-            <li>Contain at least 1 number</li>
-            <li>Contain at least 1 special character</li>
+            <li id="length-req" class="requirement">
+              <span class="req-icon">✗</span>
+              Minimum 12 characters in length
+            </li>
+            <li id="capital-req" class="requirement">
+              <span class="req-icon">✗</span>
+              Contain at least 1 capital letter
+            </li>
+            <li id="lower-req" class="requirement">
+              <span class="req-icon">✗</span>
+              Contain at least 1 lower letter
+            </li>
+            <li id="number-req" class="requirement">
+              <span class="req-icon">✗</span>
+              Contain at least 1 number
+            </li>
+            <li id="special-req" class="requirement">
+              <span class="req-icon">✗</span>
+              Contain at least 1 special character
+            </li>
           </ul>
         </div>
       </div>
@@ -89,4 +114,84 @@ function togglePassword() {
     toggleText.textContent = 'Show';
   }
 }
+
+function validatePassword() {
+  const password = document.getElementById('account_password').value;
+  
+  // Get requirement elements
+  const lengthReq = document.getElementById('length-req');
+  const capitalReq = document.getElementById('capital-req');
+  const lowerReq = document.getElementById('lower-req');
+  const numberReq = document.getElementById('number-req');
+  const specialReq = document.getElementById('special-req');
+  
+  // Validation patterns
+  const hasLength = password.length >= 12;
+  const hasCapital = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecial = /[^a-zA-Z0-9]/.test(password);
+  
+  // Update requirement indicators
+  updateRequirement(lengthReq, hasLength);
+  updateRequirement(capitalReq, hasCapital);
+  updateRequirement(lowerReq, hasLower);
+  updateRequirement(numberReq, hasNumber);
+  updateRequirement(specialReq, hasSpecial);
+  
+  // Check if all requirements are met
+  const allValid = hasLength && hasCapital && hasLower && hasNumber && hasSpecial;
+  
+  // Update submit button state
+  const submitBtn = document.querySelector('.registration-btn');
+  const passwordInput = document.getElementById('account_password');
+  
+  if (allValid) {
+    submitBtn.classList.add('valid-password');
+    passwordInput.classList.add('valid');
+    passwordInput.classList.remove('invalid');
+    submitBtn.disabled = false;
+  } else {
+    submitBtn.classList.remove('valid-password');
+    if (password.length > 0) {
+      passwordInput.classList.add('invalid');
+      passwordInput.classList.remove('valid');
+    } else {
+      passwordInput.classList.remove('valid', 'invalid');
+    }
+    submitBtn.disabled = false; // Keep enabled for user experience, server will validate
+  }
+  
+  return allValid;
+}
+
+function updateRequirement(element, isValid) {
+  const icon = element.querySelector('.req-icon');
+  
+  if (isValid) {
+    element.classList.add('valid');
+    element.classList.remove('invalid');
+    icon.textContent = '✓';
+    icon.style.color = '#38a169';
+  } else {
+    element.classList.add('invalid');
+    element.classList.remove('valid');
+    icon.textContent = '✗';
+    icon.style.color = '#e53e3e';
+  }
+}
+
+// Add event listener when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  const passwordInput = document.getElementById('account_password');
+  
+  // Validate on input (real-time)
+  passwordInput.addEventListener('input', validatePassword);
+  
+  // Validate on focus out
+  passwordInput.addEventListener('blur', validatePassword);
+  
+  // Initial validation
+  validatePassword();
+});
 </script>

@@ -400,6 +400,61 @@ nav a:focus {
   }
 }
 
+/* Password Validation Styles */
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  padding: 0.25rem 0;
+}
+
+.req-icon {
+  font-weight: bold;
+  font-size: 0.875rem;
+  min-width: 1rem;
+  text-align: center;
+}
+
+.requirement.valid {
+  color: #38a169;
+}
+
+.requirement.invalid {
+  color: #e53e3e;
+}
+
+.requirement.valid .req-icon {
+  color: #38a169 !important;
+}
+
+.requirement.invalid .req-icon {
+  color: #e53e3e !important;
+}
+
+/* Submit button validation state */
+.registration-btn.valid-password {
+  background: linear-gradient(135deg, #38a169, #2f855a);
+  box-shadow: 0 4px 12px rgba(56, 161, 105, 0.4);
+}
+
+.registration-btn.valid-password:hover {
+  background: linear-gradient(135deg, #2f855a, #276749);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(56, 161, 105, 0.5);
+}
+
+/* Password input validation states */
+#account_password.valid {
+  border-color: #38a169;
+  box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
+}
+
+#account_password.invalid {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
 /******* Main Content Styles ***************/
 main {
   flex: 1;
