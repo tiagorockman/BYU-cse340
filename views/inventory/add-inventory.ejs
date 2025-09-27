@@ -1,0 +1,501 @@
+<%- messages() %>
+<div class="inventory-container">
+  <div class="page-header">
+    <h1><%= title %></h1>
+  </div>
+  
+  <div class="page-content">
+    <form action="/inv/add-inventory" method="post" class="inventory-form" id="inventoryForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="classification_id">Classification:</label>
+          <%- classificationSelect %>
+          <div class="validation-message" id="classificationValidation"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_make">Make:</label>
+          <input 
+            type="text" 
+            id="inv_make" 
+            name="inv_make" 
+            required
+            value="<%= locals.inv_make || '' %>"
+            maxlength="30"
+          >
+          <div class="validation-message" id="makeValidation"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_model">Model:</label>
+          <input 
+            type="text" 
+            id="inv_model" 
+            name="inv_model" 
+            required
+            value="<%= locals.inv_model || '' %>"
+            maxlength="30"
+          >
+          <div class="validation-message" id="modelValidation"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_year">Year:</label>
+          <input 
+            type="number" 
+            id="inv_year" 
+            name="inv_year" 
+            required
+            min="1900"
+            max="2030"
+            value="<%= locals.inv_year || '' %>"
+          >
+          <div class="validation-message" id="yearValidation"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_color">Color:</label>
+          <input 
+            type="text" 
+            id="inv_color" 
+            name="inv_color" 
+            required
+            value="<%= locals.inv_color || '' %>"
+            maxlength="30"
+          >
+          <div class="validation-message" id="colorValidation"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_price">Price:</label>
+          <input 
+            type="number" 
+            id="inv_price" 
+            name="inv_price" 
+            required
+            min="0"
+            step="0.01"
+            value="<%= locals.inv_price || '' %>"
+          >
+          <div class="validation-message" id="priceValidation"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_miles">Mileage:</label>
+          <input 
+            type="number" 
+            id="inv_miles" 
+            name="inv_miles" 
+            required
+            min="0"
+            value="<%= locals.inv_miles || '' %>"
+          >
+          <div class="validation-message" id="milesValidation"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="inv_description">Description:</label>
+          <textarea 
+            id="inv_description" 
+            name="inv_description" 
+            required
+            rows="4"
+            maxlength="500"
+          ><%= locals.inv_description || '' %></textarea>
+          <div class="validation-message" id="descriptionValidation"></div>
+          <div class="help-text">Maximum 500 characters</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_image">Image Path:</label>
+          <input 
+            type="text" 
+            id="inv_image" 
+            name="inv_image" 
+            required
+            value="<%= locals.inv_image || '/images/vehicles/no-image.png' %>"
+            placeholder="/images/vehicles/vehicle-name.jpg"
+          >
+          <div class="validation-message" id="imageValidation"></div>
+          <div class="help-text">Path to full-size image</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_thumbnail">Thumbnail Path:</label>
+          <input 
+            type="text" 
+            id="inv_thumbnail" 
+            name="inv_thumbnail" 
+            required
+            value="<%= locals.inv_thumbnail || '/images/vehicles/no-image-tn.png' %>"
+            placeholder="/images/vehicles/vehicle-name-tn.jpg"
+          >
+          <div class="validation-message" id="thumbnailValidation"></div>
+          <div class="help-text">Path to thumbnail image</div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" id="submitBtn">Add Vehicle</button>
+        <a href="/inv/" class="cancel-btn">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+.inventory-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  color: #333;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.inventory-form {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  flex: 1 1 100%;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 15px;
+  border: 2px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-group input.valid,
+.form-group select.valid,
+.form-group textarea.valid {
+  border-color: #28a745;
+  background-color: #f8fff9;
+}
+
+.form-group input.invalid,
+.form-group select.invalid,
+.form-group textarea.invalid {
+  border-color: #dc3545;
+  background-color: #fff8f8;
+}
+
+.validation-message {
+  margin-top: 5px;
+  font-size: 0.875rem;
+  min-height: 20px;
+}
+
+.validation-message.valid {
+  color: #28a745;
+}
+
+.validation-message.invalid {
+  color: #dc3545;
+}
+
+.help-text {
+  margin-top: 5px;
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.submit-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cancel-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+@media (max-width: 768px) {
+  .inventory-container {
+    padding: 15px;
+  }
+  
+  .inventory-form {
+    padding: 20px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('inventoryForm');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  // Get all form inputs
+  const inputs = {
+    classification: document.getElementById('classificationList'),
+    make: document.getElementById('inv_make'),
+    model: document.getElementById('inv_model'),
+    year: document.getElementById('inv_year'),
+    color: document.getElementById('inv_color'),
+    price: document.getElementById('inv_price'),
+    miles: document.getElementById('inv_miles'),
+    description: document.getElementById('inv_description'),
+    image: document.getElementById('inv_image'),
+    thumbnail: document.getElementById('inv_thumbnail')
+  };
+  
+  // Validation functions
+  const validators = {
+    classification: (value) => {
+      if (!value) return { valid: false, message: 'Please select a classification.' };
+      return { valid: true, message: 'Valid classification selected.' };
+    },
+    
+    make: (value) => {
+      if (!value.trim()) return { valid: false, message: 'Make is required.' };
+      if (value.length < 2) return { valid: false, message: 'Make must be at least 2 characters.' };
+      if (value.length > 30) return { valid: false, message: 'Make must be 30 characters or less.' };
+      return { valid: true, message: 'Valid make.' };
+    },
+    
+    model: (value) => {
+      if (!value.trim()) return { valid: false, message: 'Model is required.' };
+      if (value.length < 2) return { valid: false, message: 'Model must be at least 2 characters.' };
+      if (value.length > 30) return { valid: false, message: 'Model must be 30 characters or less.' };
+      return { valid: true, message: 'Valid model.' };
+    },
+    
+    year: (value) => {
+      const year = parseInt(value);
+      if (!value) return { valid: false, message: 'Year is required.' };
+      if (isNaN(year)) return { valid: false, message: 'Year must be a number.' };
+      if (year < 1900 || year > 2030) return { valid: false, message: 'Year must be between 1900 and 2030.' };
+      return { valid: true, message: 'Valid year.' };
+    },
+    
+    color: (value) => {
+      if (!value.trim()) return { valid: false, message: 'Color is required.' };
+      if (value.length < 2) return { valid: false, message: 'Color must be at least 2 characters.' };
+      if (value.length > 30) return { valid: false, message: 'Color must be 30 characters or less.' };
+      return { valid: true, message: 'Valid color.' };
+    },
+    
+    price: (value) => {
+      const price = parseFloat(value);
+      if (!value) return { valid: false, message: 'Price is required.' };
+      if (isNaN(price)) return { valid: false, message: 'Price must be a number.' };
+      if (price < 0) return { valid: false, message: 'Price must be positive.' };
+      return { valid: true, message: 'Valid price.' };
+    },
+    
+    miles: (value) => {
+      const miles = parseInt(value);
+      if (!value) return { valid: false, message: 'Mileage is required.' };
+      if (isNaN(miles)) return { valid: false, message: 'Mileage must be a number.' };
+      if (miles < 0) return { valid: false, message: 'Mileage must be positive.' };
+      return { valid: true, message: 'Valid mileage.' };
+    },
+    
+    description: (value) => {
+      if (!value.trim()) return { valid: false, message: 'Description is required.' };
+      if (value.length < 10) return { valid: false, message: 'Description must be at least 10 characters.' };
+      if (value.length > 500) return { valid: false, message: 'Description must be 500 characters or less.' };
+      return { valid: true, message: 'Valid description.' };
+    },
+    
+    image: (value) => {
+      if (!value.trim()) return { valid: false, message: 'Image path is required.' };
+      if (!value.startsWith('/')) return { valid: false, message: 'Image path must start with "/".' };
+      return { valid: true, message: 'Valid image path.' };
+    },
+    
+    thumbnail: (value) => {
+      if (!value.trim()) return { valid: false, message: 'Thumbnail path is required.' };
+      if (!value.startsWith('/')) return { valid: false, message: 'Thumbnail path must start with "/".' };
+      return { valid: true, message: 'Valid thumbnail path.' };
+    }
+  };
+  
+  // Validate individual field
+  function validateField(fieldName, value) {
+    const validation = validators[fieldName](value);
+    const input = inputs[fieldName];
+    const validationDiv = document.getElementById(fieldName === 'classification' ? 'classificationValidation' : fieldName + 'Validation');
+    
+    // Update input styling
+    input.classList.remove('valid', 'invalid');
+    validationDiv.classList.remove('valid', 'invalid');
+    
+    if (value.toString().trim()) {
+      if (validation.valid) {
+        input.classList.add('valid');
+        validationDiv.classList.add('valid');
+      } else {
+        input.classList.add('invalid');
+        validationDiv.classList.add('invalid');
+      }
+      validationDiv.textContent = validation.message;
+    } else {
+      validationDiv.textContent = '';
+    }
+    
+    return validation.valid;
+  }
+  
+  // Validate entire form
+  function validateForm() {
+    let isValid = true;
+    
+    Object.keys(inputs).forEach(fieldName => {
+      const value = inputs[fieldName].value;
+      if (!validateField(fieldName, value)) {
+        isValid = false;
+      }
+    });
+    
+    submitBtn.disabled = !isValid;
+    return isValid;
+  }
+  
+  // Add event listeners for real-time validation
+  Object.keys(inputs).forEach(fieldName => {
+    inputs[fieldName].addEventListener('input', function() {
+      validateField(fieldName, this.value);
+      validateForm();
+    });
+    
+    inputs[fieldName].addEventListener('change', function() {
+      validateField(fieldName, this.value);
+      validateForm();
+    });
+  });
+  
+  // Form submission validation
+  form.addEventListener('submit', function(e) {
+    if (!validateForm()) {
+      e.preventDefault();
+      
+      // Focus on first invalid field
+      Object.keys(inputs).forEach(fieldName => {
+        if (inputs[fieldName].classList.contains('invalid')) {
+          inputs[fieldName].focus();
+          return false;
+        }
+      });
+    }
+  });
+  
+  // Initial validation check
+  validateForm();
+});
+</script>

@@ -1,0 +1,266 @@
+<%- messages() %>
+<div class="classification-container">
+  <div class="page-header">
+    <h1><%= title %></h1>
+  </div>
+  
+  <div class="page-content">
+    <form action="/inv/add-classification" method="post" class="classification-form" id="classificationForm">
+      <div class="form-group">
+        <label for="classification_name">Classification Name:</label>
+        <input 
+          type="text" 
+          id="classification_name" 
+          name="classification_name" 
+          required
+          pattern="^[A-Za-z]+$"
+          title="Classification name must contain only alphabetic characters (no spaces, numbers, or special characters)"
+          value="<%= locals.classification_name || '' %>"
+          maxlength="30"
+        >
+        <div class="validation-message" id="nameValidation"></div>
+        <div class="help-text">
+          Only alphabetic characters allowed (no spaces, numbers, or special characters)
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" id="submitBtn">Add Classification</button>
+        <a href="/inv/" class="cancel-btn">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+.classification-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  color: #333;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.classification-form {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #495057;
+  font-size: 1.1rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-group input.valid {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.form-group input.invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.validation-message {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  min-height: 20px;
+}
+
+.validation-message.valid {
+  color: #28a745;
+}
+
+.validation-message.invalid {
+  color: #dc3545;
+}
+
+.help-text {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.submit-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cancel-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+@media (max-width: 768px) {
+  .classification-container {
+    padding: 15px;
+  }
+  
+  .classification-form {
+    padding: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('classificationForm');
+  const nameInput = document.getElementById('classification_name');
+  const nameValidation = document.getElementById('nameValidation');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  // Validation function
+  function validateClassificationName(value) {
+    const alphabeticPattern = /^[A-Za-z]+$/;
+    
+    if (!value.trim()) {
+      return { valid: false, message: 'Classification name is required.' };
+    }
+    
+    if (value.length < 2) {
+      return { valid: false, message: 'Classification name must be at least 2 characters long.' };
+    }
+    
+    if (value.length > 30) {
+      return { valid: false, message: 'Classification name must be 30 characters or less.' };
+    }
+    
+    if (!alphabeticPattern.test(value)) {
+      return { valid: false, message: 'Only alphabetic characters allowed (no spaces, numbers, or special characters).' };
+    }
+    
+    return { valid: true, message: 'Valid classification name.' };
+  }
+  
+  // Real-time validation
+  nameInput.addEventListener('input', function() {
+    const validation = validateClassificationName(this.value);
+    
+    // Update input styling
+    nameInput.classList.remove('valid', 'invalid');
+    nameValidation.classList.remove('valid', 'invalid');
+    
+    if (this.value.trim()) {
+      if (validation.valid) {
+        nameInput.classList.add('valid');
+        nameValidation.classList.add('valid');
+      } else {
+        nameInput.classList.add('invalid');
+        nameValidation.classList.add('invalid');
+      }
+      
+      nameValidation.textContent = validation.message;
+    } else {
+      nameValidation.textContent = '';
+    }
+    
+    // Update submit button
+    submitBtn.disabled = !validation.valid;
+  });
+  
+  // Form submission validation
+  form.addEventListener('submit', function(e) {
+    const validation = validateClassificationName(nameInput.value);
+    
+    if (!validation.valid) {
+      e.preventDefault();
+      nameInput.classList.add('invalid');
+      nameValidation.classList.add('invalid');
+      nameValidation.textContent = validation.message;
+      nameInput.focus();
+    }
+  });
+  
+  // Initial validation check
+  if (nameInput.value.trim()) {
+    nameInput.dispatchEvent(new Event('input'));
+  }
+});
+</script>

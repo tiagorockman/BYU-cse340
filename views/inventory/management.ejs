@@ -1,0 +1,124 @@
+<%- messages() %>
+<div class="management-container">
+  <div class="page-header">
+    <h1><%= title %></h1>
+  </div>
+  
+  <div class="page-content">
+    <div class="management-links">
+      <div class="management-section">
+        <h2>Vehicle Classification Management</h2>
+        <p>Add new vehicle classifications to organize inventory.</p>
+        <a href="/inv/add-classification" class="management-btn classification-btn">
+          Add New Classification
+        </a>
+      </div>
+      
+      <div class="management-section">
+        <h2>Vehicle Inventory Management</h2>
+        <p>Add new vehicles to the inventory database.</p>
+        <a href="/inv/add-inventory" class="management-btn inventory-btn">
+          Add New Vehicle
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.management-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.management-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.management-section {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.management-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.management-section h2 {
+  color: #495057;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.management-section p {
+  color: #6c757d;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.management-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.classification-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.classification-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.inventory-btn {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  color: white;
+}
+
+.inventory-btn:hover {
+  background: linear-gradient(135deg, #1e7e34, #155724);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+@media (max-width: 768px) {
+  .management-links {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+}
+</style>
