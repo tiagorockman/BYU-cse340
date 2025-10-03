@@ -14,6 +14,9 @@ const pool = require('./database/')
 
 const bodyParser = require("body-parser")
 
+/*Cookie*/
+const cookieParser = require("cookie-parser")
+
 
 
 /* ***********************
@@ -27,6 +30,10 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Middleware
  * ************************/
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
+
+
  app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,

@@ -22,8 +22,27 @@
         </a>
       </div>
     </div>
+    
+    <!-- Inventory Management Section -->
+    <div class="inventory-management-section">
+      <h2>Manage Inventory</h2>
+      <p>Select a classification from the list to see the items belonging to the classification.</p>
+      
+      <!-- Classification Selection -->
+      <div class="classification-select-container">
+        <%- classificationSelect %>
+      </div>
+      
+      <!-- Inventory Display Table -->
+      <table id="inventoryDisplay"></table>
+      
+      <!-- No JavaScript Message -->
+      <noscript>JavaScript must be enabled to use this page.</noscript>
+    </div>
   </div>
 </div>
+
+<script src="/js/inventory.js"></script>
 
 <style>
 .management-container {
@@ -111,6 +130,99 @@
   box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
 }
 
+/* Inventory Management Section */
+.inventory-management-section {
+  margin-top: 40px;
+  padding: 30px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.inventory-management-section h2 {
+  color: #495057;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.inventory-management-section p {
+  color: #6c757d;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.classification-select-container {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.classification-select-container select {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #ced4da;
+  border-radius: 5px;
+  background-color: white;
+  color: #495057;
+  min-width: 250px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.classification-select-container select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+#inventoryDisplay th {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#inventoryDisplay tr:hover {
+  background-color: #f8f9fa;
+}
+
+#inventoryDisplay tr:last-child td {
+  border-bottom: none;
+}
+
+noscript {
+  display: block;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .management-links {
     grid-template-columns: 1fr;
@@ -119,6 +231,22 @@
   
   .page-header h1 {
     font-size: 2rem;
+  }
+  
+  .inventory-management-section {
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  .classification-select-container select {
+    min-width: 200px;
+    font-size: 0.9rem;
+  }
+  
+  #inventoryDisplay th,
+  #inventoryDisplay td {
+    padding: 8px 10px;
+    font-size: 0.9rem;
   }
 }
 </style>

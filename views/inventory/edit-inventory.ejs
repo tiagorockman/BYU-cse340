@@ -1,0 +1,190 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {res.redirect('/')} %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<form action="/inv/update" method="post">
+  <fieldset>
+    <legend>Modify Vehicle Information</legend>
+    
+    <label for="classificationList">Classification:</label>
+    <%- classificationSelect %>
+    
+    <label for="inv_make" class="top">Make <span>*</span></label>
+    <input type="text" name="inv_make" id="inv_make" value="<%= locals.inv_make %>" required>
+    
+    <label for="inv_model" class="top">Model <span>*</span></label>
+    <input type="text" name="inv_model" id="inv_model" value="<%= locals.inv_model %>" required>
+    
+    <label for="inv_year" class="top">Year <span>*</span></label>
+    <input type="number" name="inv_year" id="inv_year" value="<%= locals.inv_year %>" min="1900" max="2030" required>
+    
+    <label for="inv_description" class="top">Description <span>*</span></label>
+    <textarea name="inv_description" id="inv_description" rows="3" required><%= locals.inv_description %></textarea>
+    
+    <label for="inv_image" class="top">Image Path <span>*</span></label>
+    <input type="text" name="inv_image" id="inv_image" value="<%= locals.inv_image %>" required>
+    
+    <label for="inv_thumbnail" class="top">Thumbnail Path <span>*</span></label>
+    <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="<%= locals.inv_thumbnail %>" required>
+    
+    <label for="inv_price" class="top">Price <span>*</span></label>
+    <input type="number" name="inv_price" id="inv_price" value="<%= locals.inv_price %>" step="0.01" min="0" required>
+    
+    <label for="inv_miles" class="top">Miles <span>*</span></label>
+    <input type="number" name="inv_miles" id="inv_miles" value="<%= locals.inv_miles %>" min="0" required>
+    
+    <label for="inv_color" class="top">Color <span>*</span></label>
+    <input type="text" name="inv_color" id="inv_color" value="<%= locals.inv_color %>" required>
+    
+    <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+    
+    <input type="submit" name="submit" value="Update Vehicle">
+    <input type="button" name="cancel" value="Cancel" id="cancel">
+    <input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+  </fieldset>
+</form>
+
+<script>
+  // Client-side validation
+  const form = document.querySelector('form');
+  
+  form.addEventListener('submit', function(e) {
+    const make = document.getElementById('inv_make').value.trim();
+    const model = document.getElementById('inv_model').value.trim();
+    const year = document.getElementById('inv_year').value;
+    const description = document.getElementById('inv_description').value.trim();
+    const image = document.getElementById('inv_image').value.trim();
+    const thumbnail = document.getElementById('inv_thumbnail').value.trim();
+    const price = document.getElementById('inv_price').value;
+    const miles = document.getElementById('inv_miles').value;
+    const color = document.getElementById('inv_color').value.trim();
+    
+    if (!make || !model || !year || !description || !image || !thumbnail || !price || !miles || !color) {
+      e.preventDefault();
+      alert('Please fill in all required fields.');
+      return false;
+    }
+    
+    if (year < 1900 || year > 2030) {
+      e.preventDefault();
+      alert('Please enter a valid year between 1900 and 2030.');
+      return false;
+    }
+    
+    if (price < 0) {
+      e.preventDefault();
+      alert('Price cannot be negative.');
+      return false;
+    }
+    
+    if (miles < 0) {
+      e.preventDefault();
+      alert('Miles cannot be negative.');
+      return false;
+    }
+  });
+
+   const cancelBtn = document.getElementById('cancel');
+    cancelBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    window.location.href = "/inv/";
+  })
+</script>
+
+<style>
+  fieldset {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  legend {
+    font-weight: bold;
+    padding: 0 10px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  label.top {
+    margin-top: 20px;
+  }
+  
+  input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+    input[type="button"] {
+    background-color: #b1c1d3;
+    color: rgb(48, 46, 46);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+   input[type="button"]:hover {
+    background-color: #dadcdf;
+  }
+  
+  span {
+    color: red;
+  }
+  
+  .notice {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+  
+  .notice li {
+    list-style-type: none;
+    margin: 5px 0;
+  }
+</style>

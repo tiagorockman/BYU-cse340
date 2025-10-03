@@ -1,0 +1,139 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {res.redirect('/')} %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<p><strong>Confirm Deletion - The delete is permanent.</strong></p>
+<p>Please confirm that you want to delete the following vehicle. This action cannot be undone.</p>
+
+<form action="/inv/delete" method="post">
+  <fieldset>
+    <legend>Delete Vehicle Information</legend>
+    
+    <label for="inv_make" class="top">Make:</label>
+    <input type="text" name="inv_make" id="inv_make" value="<%= locals.inv_make %>" readonly>
+    
+    <label for="inv_model" class="top">Model:</label>
+    <input type="text" name="inv_model" id="inv_model" value="<%= locals.inv_model %>" readonly>
+    
+    <label for="inv_year" class="top">Year:</label>
+    <input type="number" name="inv_year" id="inv_year" value="<%= locals.inv_year %>" readonly>
+    
+    <label for="inv_price" class="top">Price:</label>
+    <input type="number" name="inv_price" id="inv_price" value="<%= locals.inv_price %>" step="0.01" readonly>
+    
+    <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+    
+    <input type="submit" name="submit" value="Delete Vehicle">
+    <input type="button" name="cancel" value="Cancel" id="cancel">
+  </fieldset>
+</form>
+
+<script>
+  const cancelBtn = document.getElementById('cancel');
+  cancelBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    window.location.href = "/inv/";
+  })
+</script>
+
+<style>
+  fieldset {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  legend {
+    font-weight: bold;
+    padding: 0 10px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  label.top {
+    margin-top: 20px;
+  }
+  
+  input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    margin-top: 5px;
+    background-color: #f8f9fa;
+  }
+  
+  input[readonly] {
+    background-color: #e9ecef;
+    color: #6c757d;
+  }
+  
+  input[type="submit"] {
+    background-color: #dc3545;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #c82333;
+  }
+
+  input[type="button"] {
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 10px;
+  }
+
+  input[type="button"]:hover {
+    background-color: #5a6268;
+  }
+  
+  .notice {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+  
+  .notice li {
+    list-style-type: none;
+    margin: 5px 0;
+  }
+
+  p {
+    margin: 15px 0;
+  }
+
+  p strong {
+    color: #dc3545;
+  }
+</style>

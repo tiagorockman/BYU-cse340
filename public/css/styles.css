@@ -400,61 +400,6 @@ nav a:focus {
   }
 }
 
-/* Password Validation Styles */
-.requirement {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  padding: 0.25rem 0;
-}
-
-.req-icon {
-  font-weight: bold;
-  font-size: 0.875rem;
-  min-width: 1rem;
-  text-align: center;
-}
-
-.requirement.valid {
-  color: #38a169;
-}
-
-.requirement.invalid {
-  color: #e53e3e;
-}
-
-.requirement.valid .req-icon {
-  color: #38a169 !important;
-}
-
-.requirement.invalid .req-icon {
-  color: #e53e3e !important;
-}
-
-/* Submit button validation state */
-.registration-btn.valid-password {
-  background: linear-gradient(135deg, #38a169, #2f855a);
-  box-shadow: 0 4px 12px rgba(56, 161, 105, 0.4);
-}
-
-.registration-btn.valid-password:hover {
-  background: linear-gradient(135deg, #2f855a, #276749);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(56, 161, 105, 0.5);
-}
-
-/* Password input validation states */
-#account_password.valid {
-  border-color: #38a169;
-  box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
-}
-
-#account_password.invalid {
-  border-color: #e53e3e;
-  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
-}
-
 /******* Main Content Styles ***************/
 main {
   flex: 1;
@@ -988,6 +933,103 @@ main {
   }
 }
 
+/* Account Management page styles */
+.account-management-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.account-content-wrapper {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.account-content-wrapper h1 {
+  color: #333;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.account-content-wrapper h2 {
+  color: #222;
+  font-size: 1.8rem;
+  margin-top: 10px;
+}
+
+.update-account {
+  margin: 20px 0;
+}
+
+.update-account a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.update-account a:hover {
+  text-decoration: underline;
+}
+
+.inventory-management-link {
+  margin-top: 20px;
+}
+
+.inventory-management-link h3 {
+  margin-bottom: 8px;
+}
+
+.inventory-management-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.inventory-management-link a:hover {
+  text-decoration: underline;
+}
+
+.welcome-message {
+  margin-top: 30px;
+}
+
+.welcome-message p {
+  font-size: 1.4rem;
+  color: #28a745;
+  font-weight: 600;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .account-management-container {
+    padding: 10px;
+  }
+
+  .account-content-wrapper {
+    padding: 20px;
+  }
+
+  .account-content-wrapper h1 {
+    font-size: 1.8rem;
+  }
+
+  .account-content-wrapper h2 {
+    font-size: 1.4rem;
+  }
+
+  .welcome-message p {
+    font-size: 1.2rem;
+  }
+}
+
 /* Error Page Styles */
 .error-page {
   text-align: center;
@@ -1102,6 +1144,19 @@ main {
   font-size: 0.95rem;
   line-height: 1.6;
 }
+
+/* Account Update */
+.account-update-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.form-wrapper { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.form-section { margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; text-align: left; }
+.form-group label { display: block; margin-bottom: 6px; font-weight: 600; }
+.form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+.form-actions { margin-top: 12px; }
+.btn { background: #007bff; color: #fff; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; }
+.btn:hover { background: #0069d9; }
+.notice { list-style: none; padding: 12px; margin-bottom: 16px; background: #fdecea; border: 1px solid #f5c6cb; color: #a94442; border-radius: 4px; }
+.form-help { font-size: 0.9rem; color: #555; margin-top: 6px; }
 
 /******* Footer Styles ***************/
 footer {
